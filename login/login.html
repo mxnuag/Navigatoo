@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="loginstyle.css">
+  <title>Login</title>
+  <!-- Add the required icons library if not already included -->
+  <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <div id="container" class="container">
+    <!-- FORM SECTION -->
+    <div class="row">
+      <!-- SIGN UP -->
+      <div class="col align-items-center flex-col sign-up">
+        <div class="form-wrapper align-items-center">
+          <div class="form sign-up">
+            <div class="input-group">
+              <i class='bx bxs-user'></i>
+              <input type="text" id="signup-username" placeholder="Username">
+            </div>
+            <div class="input-group">
+              <i class='bx bx-mail-send'></i>
+              <input type="email" id="signup-email" placeholder="Email">
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-lock-alt'></i>
+              <input type="password" id="signup-password" placeholder="Password">
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-lock-alt'></i>
+              <input type="password" id="signup-confirm-password" placeholder="Confirm password">
+            </div>
+            <button id="signup">
+              Sign up
+            </button>
+            <p>
+              <span class="account">
+                Already have an account?
+              </span>
+              <b onclick="toggle()" class="pointer account">
+                Sign in here
+              </b>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- END SIGN UP -->
+      <!-- SIGN IN -->
+      <div class="col align-items-center flex-col sign-in">
+        <div class="form-wrapper align-items-center">
+          <div class="form sign-in">
+            <div class="input-group">
+              <i class='bx bxs-user'></i>
+              <input type="text" id="signin-email" placeholder="Email">
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-lock-alt'></i>
+              <input type="password" id="signin-password" placeholder="Password">
+            </div>
+            <button id="signin">
+              Sign in
+            </button>
+            <p>
+              <b class="account">
+                Forgot password?
+              </b>
+            </p>
+            <p>
+              <span class="account">
+                Don't have an account?
+              </span>
+              <b onclick="toggle()" class="pointer account">
+                Sign up here
+              </b>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- END SIGN IN -->
+    </div>
+    <!-- END FORM SECTION -->
+    <!-- CONTENT SECTION -->
+    <div class="row content-row">
+      <!-- SIGN IN CONTENT -->
+      <div class="col align-items-center flex-col">
+        <div class="text sign-in">
+          <h2>Welcome</h2>
+        </div>
+        <div class="img sign-in"></div>
+      </div>
+      <!-- END SIGN IN CONTENT -->
+      <!-- SIGN UP CONTENT -->
+      <div class="col align-items-center flex-col">
+        <div class="img sign-up"></div>
+        <div class="text sign-up">
+          <h2>Join with us</h2>
+        </div>
+      </div>
+      <!-- END SIGN UP CONTENT -->
+    </div>
+    <!-- END CONTENT SECTION -->
+  </div>
+
+  <script>
+    let container = document.getElementById('container');
+
+    function toggle() {
+      container.classList.toggle('sign-in');
+      container.classList.toggle('sign-up');
+    }
+
+    setTimeout(() => {
+      container.classList.add('sign-in');
+    }, 200);
+  </script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC-H4Rehlxmk-3hQ0g0ay9ERC-hWPqEpOU",
+      authDomain: "navigatoo-2a350.firebaseapp.com",
+      databaseURL: "https://navigatoo-2a350-default-rtdb.firebaseio.com",
+      projectId: "navigatoo-2a350",
+      storageBucket: "navigatoo-2a350.appspot.com",
+      messagingSenderId: "487955446399",
+      appId: "1:487955446399:web:d6075212ffb0379b895d4a"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Sign-Up Functionality
+    document.getElementById("signup").addEventListener("click", function (event) {
+      event.preventDefault();
+      const username = document.getElementById("signup-username").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+      const confirmPassword = document.getElementById("signup-confirm-password").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+      if (!username || !email || !password || !confirmPassword) {
+    alert("Please complete all the fields");
+    return;
+  }
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          alert("Sign up successful! Welcome, " + user.email,);
+          toggle();
+          
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          console.error('Error signing up:', errorMessage,);
+		  alert("Error signing up: " + errorMessage);
+        });
+    });
+
+    // Sign-In Functionality
+    document.getElementById("signin").addEventListener("click", function (event) {
+      event.preventDefault();
+      const email = document.getElementById("signin-email").value;
+      const password = document.getElementById("signin-password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log('User signed in:', user);
+          location.replace("../index.html");
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          console.error('Error signing in:', errorMessage);
+          alert(errorMessage);
+        });
+    });
+  </script>
+</body>
+
+</html>
