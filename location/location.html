@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAVIGATO</title>
+    <link rel="icon" href="../files/flogo.png">
+    <link rel="stylesheet" type="text/css" href="./location.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Paytone+One&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="../location/location.html" class="logo-link">
+            <img src="../files/flogo.png" class="logo" alt="Logo" title="Navigato">
+        </a>
+        
+        <ul class="navbar">
+            <li>
+                <a href="../index.html">Home</a>
+                <a href="./location.html" class="active">Locations</a>
+                <a href="../booking.html">Room Booking</a>
+                <a href="../timetable/timetable.html">Timetable</a>
+                <a href="../contact.html">Contact Us</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="content" id="home"> 
+        <div class="main">
+            <div class="main_heading">
+                View Room Location
+            </div>
+             
+            <div class="rightside">
+                <div class="subheading">Enter the room CODE</div>
+                 <!-- Mention to find any room in the CSED building -->
+                 <p class="description">Enter the room code to find its location in the CSED building.</p>
+                <div class="search">
+                <br> 
+                    <input id="roomCodeInput" placeholder="Enter the code.." type="text">
+                    <button id="goButton" onclick="getLocation()">Go</button>
+                </div>
+                
+                <div id="locationResult" class="location-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="footer">
+        <div class="foot">
+            <div class="footer-content">
+                
+                <div class="footlinks">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href=".//login/login.html">Register</a></li>
+                        <li><a href="./about.html">About Us</a></li>
+                        <li><a href="./contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footlinks">
+                    <h4>Connect</h4>
+                    <div class="social">
+                        <a href="#" ><i class='bx bxl-facebook'></i></a>
+                        <a href="#" ><i class='bx bxl-instagram' ></i></a>
+                        <a href="#" ><i class='bx bxl-twitter' ></i></a>
+                        <a href="#" ><i class='bx bxl-linkedin' ></i></a>
+                    </div>
+                </div>
+                
+            </div>
+                 
+        </div>
+    
+        <div class="end">
+            <p>Copyright © 2023 Team NAVIGATO.<br>Website developed by: Team NAVIGATO</p>
+            </div>
+             
+    </section>
+
+    <script>
+        function getLocation() {
+        const roomCode = document.getElementById('roomCodeInput').value.trim();
+
+        // Make sure roomCode is not empty
+        if (roomCode === '') {
+            alert('Please enter a room code.');
+            return;
+        }
+
+        // Simulate fetching location data (replace with actual fetch)
+        simulateFetchLocation(roomCode)
+            .then(location => {
+                // Display location result in a popup
+                alert(`Location: ${location}`);
+            })
+            .catch(error => {
+                console.error('Error fetching location:', error);
+                // Handle error (e.g., display error message)
+                alert('Failed to fetch location. Please try again.');
+            });
+    }
+
+    // Simulate fetching location (replace with actual fetch)
+    function simulateFetchLocation(roomCode) {
+        return new Promise((resolve, reject) => {
+            // Extract the floor and room number from the roomCode
+            const floor = roomCode.substring(1, 2); // Extracts the floor number (e.g., 0, 1, 2, 3, 4)
+            const roomNumber = roomCode.substring(2); // Extracts the room number part (e.g., 01, 02, ..., 09)
+
+            let location;
+
+            // Determine the location based on the floor and room number
+            if (floor === '0' && roomNumber >= '01' && roomNumber <= '09') {
+                location = 'Ground Floor, CSED Building';
+            } else if (floor === '1' && roomNumber >= '01' && roomNumber <= '09') {
+                location = 'Level 1, CSED Building';
+            } else if (floor === '2' && roomNumber >= '01' && roomNumber <= '09') {
+                location = 'Level 2, CSED Building';
+            } else if (floor === '3' && roomNumber >= '01' && roomNumber <= '09') {
+                location = 'Level 3, CSED Building';
+            } else if (floor === '4' && roomNumber >= '01' && roomNumber <= '09') {
+                location = 'Level 4, CSED Building';
+            } else {
+                reject(new Error('Room code not found'));
+            }
+
+            // Simulate a delay to mimic fetching data from server
+            setTimeout(() => {
+                if (location) {
+                    resolve(location);
+                } else {
+                    reject(new Error('Room code not found'));
+                }
+            }, 1000); // Simulate 1 second delay for fetching
+        });
+    
+}
+
+    
+        // Animate elements on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = document.querySelectorAll('.main_heading, .subheading, .search, .location-result');
+            
+            elementsToAnimate.forEach(element => {
+                element.style.transitionDelay = `${Math.random() * 0.5}s`;
+                element.classList.add('animate-in');
+            });
+
+            // Observe footer elements for animation
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            const elementsToObserve = document.querySelectorAll('.footlinks, .social a, .end');
+            elementsToObserve.forEach(element => observer.observe(element));
+        });
+    </script>
+
+</body>
+</html>

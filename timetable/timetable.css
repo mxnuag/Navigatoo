@@ -1,0 +1,130 @@
+*{
+  padding:0;
+  margin:0;
+  box-sizing:border;
+  font-family:'Poppins',sans-serif;
+  text-decoration: none;
+  list-style: none;
+  scroll-behavior: smooth
+}
+
+body{
+  background-image: url("img2.jpg");
+  background-size:cover;
+  height: max-content;
+  
+}
+nav {
+  width: 100%;
+  position: fixed;
+  background-color: rgb(21, 74, 74);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 15%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  z-index: 1000;
+  top: 0; /* Ensure nav bar is at the top */
+}
+
+nav .logo {
+  width: 80px;
+  height: auto;
+  margin-left: 20px;
+}
+
+.navbar {
+  display: flex;
+  margin-right: 20px;
+}
+
+.navbar li {
+  list-style-type: none;
+}
+
+.navbar a {
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: ease 0.4s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  background: white;
+  color: black;
+  box-shadow: 5px 10px 30px rgb(85 85 85 / 20%);
+  border-radius: 5px;
+}
+.main{
+  scale: 1.23;
+  position: absolute;
+  top: 30%;
+  left: 42.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+.main_heading{
+  padding-bottom: 10%;
+  font-size: 2em;
+  
+}
+.sides{
+  display: flex;
+  scale: 1.3;
+
+}
+.leftside{
+  padding-right: 5%;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2;
+}
+.rightside{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2;
+}
+.search {
+  display: inline-block;
+  position: relative;
+}
+
+.search input[type="text"] {
+  width: 200px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search button[type="submit"] {
+  background-color: #4e99e9;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: .9s ease;
+}
+
+.search button[type="submit"]:hover {
+  transform: scale(1.1);
+  color: rgb(255, 255, 255);
+  background-color: blue;
+}
+
+
